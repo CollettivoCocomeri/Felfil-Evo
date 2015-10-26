@@ -1,1 +1,60 @@
-Bom
+Felfil Evo BOM
+
+ID -- Numbers -- Name
+
+C.Case
+C1 -- 1 -- case inferiore
+C2 -- 1 -- case superiore
+C5 -- 4 -- piedini
+C6 -- 1 -- parete fronte
+C7 -- 1 -- parete retro
+C8 -- 1 -- struttura interfaccia
+
+S.Serbatoio
+S2 -- 1 -- supporto serbatoio
+S1 -- 1* -- pareti serbatoio
+
+P.Piattina strutturale
+P1 -- 1 -- piattina strutturale
+
+E.Elettronica
+E1 -- 1 -- motore
+E2 -- 1 -- SSR-DD
+E3 -- 1 -- interruttore generale
+E4 -- 1 -- din 4 femmina
+E5 -- 1 -- ventola
+E6 -- 1 -- Arduino
+E7 -- 1 -- display
+E8 -- 1 -- encoder
+E9 -- 1 -- manopola
+E10 -- 1 -- relè motore
+E11 -- 1 -- breadbord
+E12 -- 1 -- connettore Arduino
+E14b -- 1 -- termistore
+
+T.Termica
+T1 -- 1 -- ugello
+T2 -- 1 -- seger
+T4 -- 1 -- retina
+T3 -- 1 -- oring
+T5 -- 1 -- camera
+T6b -- 1 -- resistenza cartuccia
+T7 -- 1 -- teflon
+T8 -- 1 -- vite tornita
+
+M.Minuteria
+M1 -- ** -- minuteria
+
+A.Alimentatore
+A1 -- 1 -- alimentatore esterno (N/A)
+
+W.Cavetteria
+W1 -- ** -- cavi elettrici (N/A)
+
+* indicates differend shaped same material elements.
+** indicates differend and numerous elements.
+
+---
+BOM Released: 26/10/2015
+BOM Version: 1.0
+---
