@@ -3,44 +3,44 @@ Felfil Evo BOM
 ID -- Numbers -- Name
 
 C.Case
-C1 -- 1 -- case inferiore
-C2 -- 1 -- case superiore
+C1 -- 1 -- case inferiore/lower case
+C2 -- 1 -- case superiore/top case
 C5 -- 4 -- piedini
-C6 -- 1 -- parete fronte
-C7 -- 1 -- parete retro
-C8 -- 1 -- struttura interfaccia
+C6 -- 1 -- parete fronte/front side
+C7 -- 1 -- parete retro/back side
+C8 -- 1 -- struttura interfaccia/interface structure
 
 S.Serbatoio
-S2 -- 1 -- supporto serbatoio
-S1 -- 1* -- pareti serbatoio
+S2 -- 1 -- supporto serbatoio/hopper
+S1 -- 1* -- pareti serbatoio/hopper
 
 P.Piattina strutturale
-P1 -- 1 -- piattina strutturale
+P1 -- 1 -- piattina strutturale/structural support
 
 E.Elettronica
-E1 -- 1 -- motore
+E1 -- 1 -- motore/gearmotor
 E2 -- 1 -- SSR-DD
-E3 -- 1 -- interruttore generale
-E4 -- 1 -- din 4 femmina
-E5 -- 1 -- ventola
+E3 -- 1 -- interruttore generale/power on switch
+E4 -- 1 -- din 4 femmina/din 4 female connector
+E5 -- 1 -- ventola/fan
 E6 -- 1 -- Arduino
 E7 -- 1 -- display
 E8 -- 1 -- encoder
-E9 -- 1 -- manopola
-E10 -- 1 -- relè motore
+E9 -- 1 -- manopola/knob
+E10 -- 1 -- relè motore/motor relay
 E11 -- 1 -- breadbord
-E12 -- 1 -- connettore Arduino
-E14b -- 1 -- termistore
+E12 -- 1 -- connettore Arduino/Arduino connector
+E14b -- 1 -- termistore/thermistor
 
 T.Termica
-T1 -- 1 -- ugello
+T1 -- 1 -- ugello/nozzle
 T2 -- 1 -- seger
-T4 -- 1 -- retina
+T4 -- 1 -- retina/filter
 T3 -- 1 -- oring
-T5 -- 1 -- camera
-T6b -- 1 -- resistenza cartuccia
+T5 -- 1 -- camera/folding chamber
+T6b -- 1 -- resistenza cartuccia/cartridge heater
 T7 -- 1 -- teflon
-T8 -- 1 -- vite tornita
+T8 -- 1 -- vite da estrusione/extruding screw
 
 M.Minuteria
 M1 -- ** -- minuteria
