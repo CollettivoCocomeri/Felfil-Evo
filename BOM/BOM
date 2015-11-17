@@ -2,7 +2,7 @@ Felfil Evo BOM
 
 ID -- Numbers -- Name
 
-C.Case
+C.Case/Case
 C1 -- 1 -- case inferiore/lower case
 C2 -- 1 -- case superiore/top case
 C5 -- 4 -- piedini
@@ -10,14 +10,14 @@ C6 -- 1 -- parete fronte/front side
 C7 -- 1 -- parete retro/back side
 C8 -- 1 -- struttura interfaccia/interface structure
 
-S.Serbatoio
+S.Serbatoio/Hopper
 S2 -- 1 -- supporto serbatoio/hopper
 S1 -- 1* -- pareti serbatoio/hopper
 
-P.Piattina strutturale
+P.Piattina strutturale/Structural support
 P1 -- 1 -- piattina strutturale/structural support
 
-E.Elettronica
+E.Elettronica/Electronic 
 E1 -- 1 -- motore/gearmotor
 E2 -- 1 -- SSR-DD
 E3 -- 1 -- interruttore generale/power on switch
@@ -32,7 +32,7 @@ E11 -- 1 -- breadbord
 E12 -- 1 -- connettore Arduino/Arduino connector
 E14b -- 1 -- termistore/thermistor
 
-T.Termica
+T.Termica/Thermic 
 T1 -- 1 -- ugello/nozzle
 T2 -- 1 -- seger
 T4 -- 1 -- retina/filter
@@ -42,14 +42,14 @@ T6b -- 1 -- resistenza cartuccia/cartridge heater
 T7 -- 1 -- teflon
 T8 -- 1 -- vite da estrusione/extruding screw
 
-M.Minuteria
+M.Minuteria/Small metal parts
 M1 -- ** -- minuteria
 
-A.Alimentatore
-A1 -- 1 -- alimentatore esterno (N/A)
+A.Alimentatore/Power supply
+A1 -- 1 -- alimentatore esterno (N/A)/Power supply
 
-W.Cavetteria
-W1 -- ** -- cavi elettrici (N/A)
+W.Cavetteria/Wires
+W1 -- ** -- cavi elettrici (N/A)/Wires
 
 ---
 * indicates differend shaped same material elements.
