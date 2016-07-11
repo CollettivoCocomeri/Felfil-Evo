@@ -33,7 +33,7 @@ E.Elettronica/Electronic
 E2 -- 1 -- SSR-DD 25
 //We use a Solid State Relay (25A, DD), but everything could support enough amperes to feed resistance heater will be ok.
 E3 -- 1 -- interruttore generale/power on switch
-//A bit of security is always don't waste!
+//A bit of security is always a good idea!
 E5 -- 1 -- ventola/fan
 //You will need a fan only if you want to cool down electronic boards.
 E6 -- 1 – Arduino Uno
