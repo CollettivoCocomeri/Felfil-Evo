@@ -8,6 +8,7 @@ Contents of the folder:
 - 3D-Model
 - BOM
 - Electronics
+- FEBK - Basic Kit
 - License
 
-Last update: 09/06/2016
+Last update: 18/07/2016
