@@ -13,7 +13,7 @@
 #include <MenuBackend.h>
 #include <ClickEncoder.h>
 #include <TimerOne.h>
-#include <LCD.h>
+//#include <LCD.h>
 #include <LiquidCrystal_I2C.h>
 #include <WString.h>
 
@@ -401,7 +401,7 @@ void FelfilMenu::RefreshTemperatureDisplayRow()
 
 	display->setCursor(2, 0);
 	PadNumber(tempInput);
-	display->print(tempInput, 1);
+	display->print(tempInput, 2);
 
 	display->setCursor(7, 0);
 	display->print("/");
