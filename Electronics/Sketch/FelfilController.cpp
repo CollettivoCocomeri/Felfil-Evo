@@ -97,7 +97,7 @@ void FelfilControler::ControlPwm(int engineCurrent, int pwmSetpoint)
 	}
 
 	protectionModeActivated = false;
-	analogWrite(s1Pin, pwmSetpoint * 51);
+	analogWrite(s1Pin, pwmSetpoint * 28.33);
 }
 
 TemperatureControlState FelfilControler::ControlTemperature(double tempInput, double tempSetpoint)

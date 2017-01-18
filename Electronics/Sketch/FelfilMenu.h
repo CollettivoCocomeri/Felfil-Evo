@@ -13,11 +13,12 @@
 #include <MenuBackend.h>
 #include <ClickEncoder.h>
 #include <TimerOne.h>
-#include <LCD.h>
+//#include <LCD.h>
 #include <LiquidCrystal_I2C.h>
 #include <WString.h>
 
 #define TEMP_INIT "TempInit"
+#define TEMP_WAIT "TempWait"
 #define PWM_INIT "PwmInit"
 #define MENU_TEMP_ROOT "TempRoot"
 #define MENU_TEMP_SET "TempSet"
@@ -30,8 +31,8 @@
 
 //LCD Char
 const uint8_t charBitmap[][8] = {
-	{ 0, 0xe, 0xe, 0xe, 0xe, 0xe, 0xe, 0 },//quadratino vuoto 0
-	{ 0, 0xe, 0xa, 0xa, 0xa, 0xa, 0xe, 0 },//quadratino pieno 1
+	{ 0x4, 0xa, 0xa, 0x11, 0x15, 0x15, 0xe, 0 },//quadratino vuoto 0
+	{ 0, 0, 0, 0, 0, 0, 0, 0 },//quadratino pieno 1
 	{ 0, 0x8, 0xc, 0x1e, 0x1f, 0x1e, 0xc, 0x8 },//freccina 2
 	{ 0xc, 0x12, 0x12, 0xc, 0, 0, 0, 0 } };//gradi;
 
@@ -41,8 +42,10 @@ private:
 
 	MenuBackend* menu;
 	MenuItem tempInit = MenuItem(TEMP_INIT);
+	MenuItem tempWait = MenuItem(TEMP_WAIT);
 	MenuItem tempRoot = MenuItem(MENU_TEMP_ROOT);
 	MenuItem tempSet = MenuItem(MENU_TEMP_SET);
+	MenuItem pwmInit = MenuItem(PWM_INIT);
 	MenuItem pwmRoot = MenuItem(MENU_PWM_ROOT);
 	MenuItem pwmSet = MenuItem(MENU_PWM_SET);
 	MenuItem pwmProtectionMode = MenuItem(MENU_PWM_PROTECTION_MODE);
@@ -52,7 +55,10 @@ private:
 	{
 		menu = new MenuBackend(menuUse, menuChange);
 
-		tempInit.addRight(tempRoot);
+		tempInit.addRight(tempWait);
+		tempWait.addRight(pwmInit);
+		pwmInit.addRight(tempRoot);
+
 		tempRoot.addRight(tempSet);
 
 		pwmRoot.addRight(pwmSet);
@@ -70,6 +76,7 @@ public:
 	MenuBackend* GetMenu() { return menu; };
 	bool IsMenuRoot() { return GetCurrentMenuName() == "MenuRoot"; }
 	bool IsTempInit() { return GetCurrentMenuName() == TEMP_INIT; }
+	bool IsTempWait() { return GetCurrentMenuName() == TEMP_WAIT; }
 	bool IsPwmInit() { return GetCurrentMenuName() == PWM_INIT; }
 	bool IsTempRoot() { return GetCurrentMenuName() == MENU_TEMP_ROOT; }
 	bool IsTempSet() { return GetCurrentMenuName() == MENU_TEMP_SET; }
@@ -110,6 +117,8 @@ private:
 	uint8_t pwmStep;
 	uint8_t pwmSetpoint;
 
+	bool heating = false;
+
 	float defaultTemp;
 	float minTemp;
 	float maxTemp;
@@ -135,13 +144,15 @@ private:
 
 	void PadNumber(float value);
 	void PrintSpaces(int tot);
-	void RefreshTemperatureInitDisplay();
-	void RefreshPwmInitDisplay();
-	void RefreshTemperatureDisplayRow();
-	void RefreshPwdDisplayRow();
-	void RefreshDisplay();
+
 	void ShowWellcomeMessage();
 	void ShowProtectionModeMessage();
+	void RefreshTemperatureInitDisplay();
+	void RefreshTemperatureWaitDisplay();
+	void RefreshTemperatureDisplayRow();
+	void RefreshDisplay();
+	void RefreshPwmInitDisplay();
+	void RefreshPwdDisplayRow();
 
 	void ReadEncoder();
 	void ReadMenuEncoderMovement();
@@ -160,6 +171,8 @@ public:
 
 	void SetupPwm(uint8_t defaultValue, uint8_t minValue, uint8_t maxValue, uint8_t step);
 	void SetupTemperature(float defaultValue, float minValue, float maxValue, float step);
+	void SetHeatingMode(bool heating);
+
 	void SetupClickEncoder(uint8_t A, uint8_t B, uint8_t BTN);
 	void SetupLcdDisplay(uint8_t lcd_Addr, uint8_t En, uint8_t Rw, uint8_t Rs, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7, uint8_t backlighPin, t_backlighPol pol);
 	void SetupEngineCurrentRefreshInterval(uint16_t millis);
@@ -177,6 +190,8 @@ public:
 
 	int GetPwmSetpoint();
 	double GetTempSetpoint();
+
+	void TemperatureReached();
 };
 
 #pragma region Init
@@ -257,6 +272,11 @@ void FelfilMenu::SetupTemperature(float defaultValue, float minValue, float maxV
 	tempStep = step;
 }
 
+void FelfilMenu::SetHeatingMode(bool heating)
+{
+	this->heating = heating;
+}
+
 void FelfilMenu::SetupClickEncoder(uint8_t A, uint8_t B, uint8_t BTN)
 {
 	encoder = new ClickEncoder(A, B, BTN);
@@ -330,9 +350,9 @@ void FelfilMenu::ShowWellcomeMessage()
 {
 	display->clear();
 	display->setCursor(0, 0);
-	display->print("What do you want");
+	display->print("   Felfil Evo   ");
 	display->setCursor(0, 1);
-	display->print(" extrude today? ");
+	display->print("firmware Ver.0.8");
 	delay(2000);
 }
 
@@ -343,9 +363,9 @@ void FelfilMenu::ShowProtectionModeMessage()
 
 	display->clear();
 	display->setCursor(0, 0);
-	display->print("     Engine");
+	display->print("Protection Mode!");
 	display->setCursor(0, 1);
-	display->print(" Protection Mode");
+	display->print("Setting resetted");
 }
 
 void FelfilMenu::RefreshTemperatureInitDisplay()
@@ -366,24 +386,50 @@ void FelfilMenu::RefreshTemperatureInitDisplay()
 	PrintSpaces(3);
 }
 
+void FelfilMenu::RefreshTemperatureWaitDisplay()
+{
+	display->setCursor(0, 0);
+	display->print("  ");
+	display->setCursor(2, 0);
+	PadNumber(tempInput);
+	display->print(tempInput, 2);
+
+	display->setCursor(7, 0);
+	display->print("/");
+
+	display->setCursor(8, 0);
+	PadNumber(tempSetpoint);
+	display->print(tempSetpoint, 1);
+
+	display->setCursor(13, 0);
+	display->print(char(3));
+	display->setCursor(14, 0);
+	display->print("C");
+	PrintSpaces(1);
+
+	display->setCursor(0, 1);
+	display->print("    Heating!    ");
+}
+
 void FelfilMenu::RefreshPwmInitDisplay()
 {
 	display->setCursor(0, 0);
-	display->print("Speed:");
+	display->print("Set speed:");
 	PrintSpaces(10);
 
 	display->setCursor(0, 1);
 	PrintSpaces(1);
-	display->print(" M:");
+	display->print("RPM:");
+	display->print(pwmSetpoint);
+	PrintSpaces(11);
 
-	for (int i = 0; i < maxPwm; i++)
+	/*for (int i = 0; i < maxPwm; i++)
 	{
 		int cursorX = i + 3;
 		display->setCursor(cursorX, 1);
 		display->print(char(pwmSetpoint > i ? 0 : 1));
-	}
-	
-	PrintSpaces(13 - maxPwm);
+	}*/
+	//PrintSpaces(13 - maxPwm);
 }
 
 void FelfilMenu::RefreshTemperatureDisplayRow()
@@ -401,7 +447,7 @@ void FelfilMenu::RefreshTemperatureDisplayRow()
 
 	display->setCursor(2, 0);
 	PadNumber(tempInput);
-	display->print(tempInput, 1);
+	display->print(tempInput, 2);
 
 	display->setCursor(7, 0);
 	display->print("/");
@@ -414,7 +460,8 @@ void FelfilMenu::RefreshTemperatureDisplayRow()
 	display->print(char(3));
 	display->setCursor(14, 0);
 	display->print("C");
-	PrintSpaces(1);
+	
+	display->print(heating ? char(0) : char(1));
 }
 
 void FelfilMenu::RefreshPwdDisplayRow() 
@@ -429,17 +476,22 @@ void FelfilMenu::RefreshPwdDisplayRow()
 		display->print(" ");
 	}
 
+	//display->setCursor(1, 1);
+	//display->print("M:");
+
+	//for (int i = 0; i < maxPwm; i++)
+	//{
+	//	int cursorX = i + 3;
+	//	display->setCursor(cursorX, 1);
+	//	display->print(char(pwmSetpoint > i ? 0 : 1));
+	//}
+
 	display->setCursor(1, 1);
-	display->print("M:");
+	PrintSpaces(1);
+	display->print("RPM:");
+	display->print(pwmSetpoint);
 
-	for (int i = 0; i < maxPwm; i++)
-	{
-		int cursorX = i + 3;
-		display->setCursor(cursorX, 1);
-		display->print(char(pwmSetpoint > i ? 0 : 1));
-	}
-
-	display->print(" A:");
+	display->print("   A:");
 	display->print(engineCurrentInput, 2);
 
 	PrintSpaces(6 - maxPwm);
@@ -450,6 +502,12 @@ void FelfilMenu::RefreshDisplay()
 	if (menu->IsTempInit())
 	{
 		RefreshTemperatureInitDisplay();
+		return;
+	}
+
+	if (menu->IsTempWait())
+	{
+		RefreshTemperatureWaitDisplay();
 		return;
 	}
 
@@ -486,6 +544,12 @@ int FelfilMenu::GetPwmSetpoint()
 double FelfilMenu::GetTempSetpoint()
 {
 	return tempSetpoint;
+}
+
+void FelfilMenu::TemperatureReached()
+{
+	if (menu->IsTempWait())
+		menu->GetMenu()->moveRight();
 }
 
 bool FelfilMenu::IsTempSetpointInitialized()
