@@ -1,5 +1,6 @@
 In this folder you will find:
 - 3d model of the complete Felfil Evo
+- some elements ready to be printed in 3d
 
 The file is a standard .stp(step), so you can easily open it with the most common 3d programs.
 
