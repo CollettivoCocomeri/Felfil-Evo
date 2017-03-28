@@ -352,7 +352,7 @@ void FelfilMenu::ShowWellcomeMessage()
 	display->setCursor(0, 0);
 	display->print("   Felfil Evo   ");
 	display->setCursor(0, 1);
-	display->print("firmware Ver.0.8");
+	display->print("firmware Ver.0.9");
 	delay(2000);
 }
 

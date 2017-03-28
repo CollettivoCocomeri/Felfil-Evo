@@ -1,4 +1,6 @@
 
+/* Felfil Evo Firmware Version 0.9  International */
+
 //#include "FakePid.h"
 #include "FelfilReader.h"
 #include "FelfilController.h"
@@ -80,7 +82,7 @@ void setup() {
   //setup menu
   felfilMenu = new FelfilMenu();
   felfilMenu->SetupPwm(0, 0, 9, 1);
-  felfilMenu->SetupTemperature(100, 25, 250, 0.5);
+  felfilMenu->SetupTemperature(150, 25, 250, 0.5);
   //felfilMenu->SetupLcdDisplay(I2C_ADDR, En_pin, Rw_pin, Rs_pin, D4_pin, D5_pin, D6_pin, D7_pin, BACKLIGHT_PIN, POSITIVE);
   felfilMenu->SetupLcdDisplay  (0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  
   felfilMenu->SetupClickEncoder(9, 8, 7);
@@ -115,7 +117,10 @@ void loop() {
 
   //setpoint iniziali non settati
   if (!felfilMenu->IsTempSetpointInitialized())
+  {
+    felfilController->StopEngine();
     return;
+  }
 
   //lettura valori di setpoint
   int pwmSetpoint = felfilMenu->GetPwmSetpoint();

@@ -91,13 +91,18 @@ void FelfilControler::ControlPwm(int engineCurrent, int pwmSetpoint)
 {
 	if (engineCurrent >= 2)
 	{
-		digitalWrite(s1Pin, LOW);
+		StopEngine();
 		protectionModeActivated = true;
 		return;
 	}
 
 	protectionModeActivated = false;
 	analogWrite(s1Pin, pwmSetpoint * 28.33);
+}
+
+void FelfilControler::StopEngine()
+{
+	digitalWrite(s1Pin, LOW);
 }
 
 TemperatureControlState FelfilControler::ControlTemperature(double tempInput, double tempSetpoint)

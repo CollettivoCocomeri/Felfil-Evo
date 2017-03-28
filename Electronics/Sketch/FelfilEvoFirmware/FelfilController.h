@@ -23,7 +23,7 @@ class FelfilControler
 private:
 	PID* pid;
 	
-	//attivazione modalità di protezione
+	//attivazione modalitï¿½ di protezione
 	bool protectionModeActivated = false;
 
 	//temperatura rilevata
@@ -63,6 +63,7 @@ public:
 	void Reset();
 
 	void ControlPwm(int engineCurrent, int pwmSetpoint);
+	void StopEngine();
 	TemperatureControlState ControlTemperature(double tempInput, double tempSetpoint);
 
 	bool IsProtectionModeActivated();
