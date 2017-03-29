@@ -352,7 +352,7 @@ void FelfilMenu::ShowWellcomeMessage()
 	display->setCursor(0, 0);
 	display->print("   Felfil Evo   ");
 	display->setCursor(0, 1);
-	display->print("firmware Ver.0.9");
+	display->print("firmware Ver.0.9");//Translate
 	delay(2000);
 }
 
@@ -363,15 +363,15 @@ void FelfilMenu::ShowProtectionModeMessage()
 
 	display->clear();
 	display->setCursor(0, 0);
-	display->print("Protection Mode!");
+	display->print("Protection Mode!");//Translate
 	display->setCursor(0, 1);
-	display->print("Setting resetted");
+	display->print("Setting resetted");//Translate
 }
 
 void FelfilMenu::RefreshTemperatureInitDisplay()
 {
 	display->setCursor(0, 0);
-	display->print("Temperature:");
+	display->print("Temperature:");//Translate
 	PrintSpaces(4);
 
 	display->setCursor(0, 1);
@@ -408,18 +408,18 @@ void FelfilMenu::RefreshTemperatureWaitDisplay()
 	PrintSpaces(1);
 
 	display->setCursor(0, 1);
-	display->print("    Heating!    ");
+	display->print("    Heating!    ");//Translate
 }
 
 void FelfilMenu::RefreshPwmInitDisplay()
 {
 	display->setCursor(0, 0);
-	display->print("Set speed:");
+	display->print("Set speed:");//Translate
 	PrintSpaces(10);
 
 	display->setCursor(0, 1);
 	PrintSpaces(1);
-	display->print("RPM:");
+	display->print("RPM:");//Translate?
 	display->print(pwmSetpoint);
 	PrintSpaces(11);
 

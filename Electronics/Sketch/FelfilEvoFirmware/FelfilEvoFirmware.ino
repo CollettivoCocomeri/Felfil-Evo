@@ -1,5 +1,8 @@
 
-/* Felfil Evo Firmware Version 0.9  International */
+
+/* March 29 2017,  Felfil Evo Firmware Version 0.9  International */
+
+/* For who wants to translate the Firmware language, just search for "Translate" comment, you will find all the text displayed in the firmware  */
 
 //#include "FakePid.h"
 #include "FelfilReader.h"
