@@ -1,6 +1,4 @@
-
-
-/* March 29 2017,  Felfil Evo Firmware Version 0.9  International */
+/* 05/04/2017 Felfil Evo Firmware Version 0.9.1  International */
 
 /* For who wants to translate the Firmware language, just search for "Translate" comment, you will find all the text displayed in the firmware  */
 
@@ -85,7 +83,7 @@ void setup() {
   //setup menu
   felfilMenu = new FelfilMenu();
   felfilMenu->SetupPwm(0, 0, 9, 1);
-  felfilMenu->SetupTemperature(150, 25, 250, 0.5);
+  felfilMenu->SetupTemperature(150, 25, 250, 1);
   //felfilMenu->SetupLcdDisplay(I2C_ADDR, En_pin, Rw_pin, Rs_pin, D4_pin, D5_pin, D6_pin, D7_pin, BACKLIGHT_PIN, POSITIVE);
   felfilMenu->SetupLcdDisplay  (0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  
   felfilMenu->SetupClickEncoder(9, 8, 7);
@@ -122,6 +120,7 @@ void loop() {
   if (!felfilMenu->IsTempSetpointInitialized())
   {
     felfilController->StopEngine();
+    felfilController->StopHeating();
     return;
   }
 

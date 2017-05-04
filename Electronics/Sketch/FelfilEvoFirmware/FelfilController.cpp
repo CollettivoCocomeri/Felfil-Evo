@@ -105,6 +105,13 @@ void FelfilControler::StopEngine()
 	digitalWrite(s1Pin, LOW);
 }
 
+void FelfilControler::StopHeating()
+{
+  digitalWrite(s2Pin, LOW);
+  digitalWrite(s3Pin, LOW);
+  digitalWrite(s4Pin, LOW); 
+}
+
 TemperatureControlState FelfilControler::ControlTemperature(double tempInput, double tempSetpoint)
 {
 	this->tempInput = tempInput;

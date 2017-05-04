@@ -64,6 +64,7 @@ public:
 
 	void ControlPwm(int engineCurrent, int pwmSetpoint);
 	void StopEngine();
+  void StopHeating();
 	TemperatureControlState ControlTemperature(double tempInput, double tempSetpoint);
 
 	bool IsProtectionModeActivated();
