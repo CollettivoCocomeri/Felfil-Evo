@@ -3,7 +3,7 @@
 #ifndef _FELFILCONTROLLER_h
 #define _FELFILCONTROLLER_h
 
-#include <PID_v1.h>
+#include <FelfilPID.h>
 //#include "FakePid.h"
 
 #if defined(ARDUINO) && ARDUINO >= 100
