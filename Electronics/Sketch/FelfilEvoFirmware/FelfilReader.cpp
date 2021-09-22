@@ -1,35 +1,44 @@
-// 
-// 
-// 
-
 #include "FelfilReader.h"
 
 #pragma region Init
 
-FelfilReader::FelfilReader(Max6675* ts, uint8_t engineCurrentPin)
-{
+FelfilReader::FelfilReader(Max6675* ts, uint8_t engineCurrentPin){
 	this->ts = ts;
 	this->engineCurrentPin = engineCurrentPin;
 }
 
-void FelfilReader::SetupEngineCurrentSamples(uint16_t tot, uint16_t samplingPeriod)
-{
+void FelfilReader::SetupEngineCurrentSamples(uint16_t tot, uint16_t samplingPeriod){
 	this->engineCurrentSamples = tot;
 	this->engineCurrentSamplePeriod = samplingPeriod;
 }
 
-void FelfilReader::SetupTemperatureSamples(uint16_t tot, uint16_t samplingPeriod)
-{
+void FelfilReader::SetupTemperatureSamples(uint16_t tot, uint16_t samplingPeriod){
 	this->temperatureSamples = tot;
 	this->temperatureSamplePeriod = samplingPeriod;
 }
 
 #pragma endregion
 
+void FelfilReader::setTempStart(){
+  this->temp_start = ReadTemperature();
+}
+
+long int FelfilReader::getTempStart(){
+  return temp_start;
+}
+
+void FelfilReader::setTempEnd(){
+  this->temp_end = ReadTemperature();
+}
+
+long int FelfilReader::getTempEnd(){
+  return temp_end;
+}
+
+
 #pragma region Refresh Sample
 
-void FelfilReader::SampleEngineCurrent(float offset)
-{
+void FelfilReader::SampleEngineCurrent(float offset){
 	engineCurrentAvg = 0;
 
 	for (uint16_t i = 0; i < engineCurrentSamples; i++)
@@ -46,8 +55,7 @@ void FelfilReader::SampleEngineCurrent(float offset)
 	engineCurrentInitialized = true;
 }
 
-void FelfilReader::SampleTemperature()
-{
+void FelfilReader::SampleTemperature(){
 	//faccio passare almeno engineCurrentSamplePeriod ms
 	unsigned long now = millis();
 	if (now - lastTemparatureSampleTime < temperatureSamplePeriod)
@@ -72,22 +80,19 @@ void FelfilReader::SampleTemperature()
 
 #pragma region Read Measures
 
-float FelfilReader::ReadEngineCurrent(float offset)
-{
+float FelfilReader::ReadEngineCurrent(float offset){
 	SampleEngineCurrent(offset);
 
 	return lastEngineCurrentMeasure;
 }
 
-float FelfilReader::ReadTemperature()
-{
+float FelfilReader::ReadTemperature(){
 	SampleTemperature();
 
 	return lastTemperatureMeasure;
 }
 
-bool FelfilReader::IsInitialized()
-{
+bool FelfilReader::IsInitialized(){
 	return temperatureInitialized && engineCurrentInitialized;
 }
 
