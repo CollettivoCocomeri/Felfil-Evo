@@ -1,4 +1,4 @@
-/* 05/04/2017 Felfil Evo Firmware Version 0.9.1  International */
+/* 22/09/2021 Felfil Evo Firmware Version 1.3  International */
 
 /* For who wants to translate the Firmware language, just search for "Translate" comment, you will find all the text lcded in the firmware  */
 
