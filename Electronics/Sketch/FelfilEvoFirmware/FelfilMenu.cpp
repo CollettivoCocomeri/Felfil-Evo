@@ -299,7 +299,7 @@ void FelfilMenu::ShowWellcomeMessage(){
   lcd.setCursor(0, 0);
   lcd.print("   Felfil Evo   ");
   lcd.setCursor(0, 1);
-  lcd.print("Hammers97");//Translate
+  lcd.print("Firmware V1.3");//Translate
   delay(2000);
 }
 
