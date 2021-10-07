@@ -31,11 +31,11 @@
 #define HEATING_OVER_SETPOINT_ERROR "HeatingOverSetpointError"
 
 //Errori
-#define TERMOCOPPIA         "SENSOR_ERROR"      // max6675 rotto -> temp = 750, termocoppia al contrario -> temp = 0
-#define SENSORI             "TERMAL_PROBE"      // temperatura non sale quando scalda
-#define CONTATTO_COPPIA     "PROBE_CONTACT"     // c'è un intervallo troppo elevato tra un valore letto e il precedenze
-#define PWM_PROTECTION      "PWM_PROTECTION"    // protection mode (assirbimento motore > 2)
-#define HEAT_OVER_SETPOINT  "OVERHEATING"       // scalda nonostante il raggiungimento del setpoint 
+#define TERMOCOPPIA         "TERMOCOPPIA" // 0-750 (rotto oppure coppia al contrario)
+#define SENSORI             "SENSORI_TEMP" // temperatura non sale quando scalda
+#define CONTATTO_COPPIA     "CONTATTO_COPPIA" // c'è un intervallo troppo elevato tra un valore letto e il precedenze
+#define PWM_PROTECTION      "PWM_PROTECTION" // protection mode (assirbimento motore > 2)
+#define HEAT_OVER_SETPOINT  "HEAT_IN_SETPOINT" // scalda nonostante il raggiungimento del setpoint 
 
 #define BLINK_INTERVAL_MILLS 2000
 #define DEFAULT_ENGINE_CURRENT_REFRESH_MILLIS 500

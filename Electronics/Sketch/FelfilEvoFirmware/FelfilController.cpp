@@ -1,7 +1,11 @@
 #include "FelfilController.h"
 
 #define TimePassed 60000 //60 secondi
-#define GapGoal 5
+#define GapGoalSoft 5
+#define GapGoalHard 3
+#define ThresholdTemp 180
+
+int gap_goal;
 
 uint8_t temp_start = 0;
 uint8_t temp_end   = 0;
@@ -43,7 +47,6 @@ bool FelfilControler::hasTotTimePassed(long int _time_passed)
   bool flag = false;
   long int _timer_end = getTimerEnd();
   long int time_passed = timer_end - timer_start;
-//  stampa("\ntempo passato: "); stampa((String)time_passed);
 
   if (time_passed > _time_passed)
     flag = true;
@@ -188,7 +191,13 @@ void FelfilControler::checkTempError(FelfilReader* felfilReader, FelfilMenu* fel
       temp_end = felfilReader->getTempEnd();
       
       double gap = temp_end-temp_start;
-      if(gap<GapGoal)
+
+      if(temp_end > ThresholdTemp)
+        gap_goal = GapGoalHard;
+      else
+        gap_goal = GapGoalSoft;
+      
+      if(gap<gap_goal)
       {
         if(felfilMenu->isHeating() && !isOnSetpoint(felfilReader))
           felfilMenu->GoToErrorMode(SENSORI);

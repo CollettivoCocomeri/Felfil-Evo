@@ -166,10 +166,6 @@ void FelfilMenu::MenuUsed(MenuUseEvent used){
     if (menu->IsTempInit())
       isTempInitialized = true;
 
-    /*if (menu->IsPwmInit())
-      isPwmInitialized = true;
-    */
-
     menu->GetMenu()->moveRight();
     return;
   }
@@ -299,7 +295,7 @@ void FelfilMenu::ShowWellcomeMessage(){
   lcd.setCursor(0, 0);
   lcd.print("   Felfil Evo   ");
   lcd.setCursor(0, 1);
-  lcd.print("Firmware V1.3");//Translate
+  lcd.print(" Firmware V1.3");//Translate
   delay(2000);
 }
 
